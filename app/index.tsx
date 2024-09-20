@@ -1,26 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native';
+import React, { FC } from 'react';
+import { RootNavigation } from '../src/navigation';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-export default function TabOneScreen() {
+const queryClient = new QueryClient();
+
+const App: FC = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Holis</Text>
-    </View>
+    <QueryClientProvider client={queryClient}>
+      <RootNavigation />
+    </QueryClientProvider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+export default App;
