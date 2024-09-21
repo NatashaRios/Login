@@ -1,6 +1,5 @@
-// import { IAuth, IResponseLogin, login, setToken } from '@/servicies';
 import { setToken } from '@/servicies/keychain/token';
-import { IAuth, IResponseLogin, login } from '@/servicies/login';
+import { IAuth, IResponseLogin, login } from '@/servicies/login/login';
 import { useMutation } from '@tanstack/react-query';
 
 interface ILoginResponse {
@@ -8,7 +7,7 @@ interface ILoginResponse {
   isSuccess: boolean;
   isError: boolean;
   isPending: boolean;
-  data?: IResponseLogin | string;
+  data?: IResponseLogin;
 }
 
 export const useLogin = (): ILoginResponse => {
@@ -18,11 +17,11 @@ export const useLogin = (): ILoginResponse => {
     isError,
     isPending,
     data,
-  } = useMutation<IResponseLogin | string, Error, IAuth>({
+  } = useMutation<IResponseLogin, Error, IAuth>({
     mutationKey: ['login'],
     mutationFn: (payload: IAuth) => login(payload),
-    onSuccess: (data: IResponseLogin | string) => {
-      if (typeof data !== 'string') {
+    onSuccess: (data: IResponseLogin) => {
+      if (data.jwt) {
         setToken(data.jwt);
       }
     },

@@ -7,7 +7,7 @@ interface IProps extends TextProps {
   color?: string;
 }
 
-export const Heading1: FC<IProps> = ({ text, accessibilityLabel, color }) => {
+export const Text1: FC<IProps> = ({ text, accessibilityLabel, color }) => {
   return (
     <Text
       style={[styles.text, { color }]}

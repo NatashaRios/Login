@@ -3,4 +3,5 @@ export const colors = {
   softRose: '#ce94b3',
   wineRed: '#5c1039',
   blush: '#cfafb8',
+  hotPink: '#f14475',
 };

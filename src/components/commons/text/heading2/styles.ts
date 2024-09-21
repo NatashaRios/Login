@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   text: {
-    fontSize: 32,
-    fontWeight: '600',
+    fontSize: 20,
+    fontWeight: '500',
   },
 });

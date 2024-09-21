@@ -1,4 +1,5 @@
 import Config from 'react-native-config';
+import { validateCredentials } from '../helper';
 
 export interface IAuth {
   email: string;
@@ -6,28 +7,23 @@ export interface IAuth {
 }
 
 export interface IResponseLogin {
-  jwt: string;
+  jwt?: string;
+  error?: string;
 }
 
-export const login = async (
-  payload: IAuth
-): Promise<IResponseLogin | string> => {
+export const login = async (payload: IAuth): Promise<IResponseLogin> => {
   const url = `${Config.API_URL}/api/v0/authenticate`;
-
+  const validCredential = validateCredentials(payload);
   try {
-    if (
-      payload.email === 'it@drixit.com' &&
-      payload.password === 'some-password'
-    ) {
-      return { jwt: 'jwt-token' };
+    if (typeof validCredential === 'object') {
+      return { jwt: validCredential.token };
     } else {
-      return 'Email or password incorrect';
+      return { error: 'Email or password incorrect' };
     }
 
     const response = await fetch(url, {
       method: 'POST',
       headers: {
-        'X-CMC_PRO_API_KEY': Config.API_KEY || '',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(payload),
