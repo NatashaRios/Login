@@ -1,5 +1,5 @@
 import { IServerUser } from '@/interfaces';
-import { getUser } from '@/servicies/user/user';
+import { getUser } from '@/servicies/user';
 import { useQuery } from '@tanstack/react-query';
 
 interface IGetUser {

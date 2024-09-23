@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { View, SafeAreaView } from 'react-native';
 import { styles } from './styles';
 import { Button, Heading1, Input, Loader, Text1 } from '@/components';
@@ -8,17 +8,29 @@ import { RootStackParamsList } from '@/navigation';
 import { useDispatch } from 'react-redux';
 import { login } from '@/redux';
 import { useLogin } from '@/servicies/hooks';
+import { users } from '@/servicies/users';
+import debounce from 'lodash/debounce';
 
 type NavigationProps = NativeStackScreenProps<RootStackParamsList, 'Login'>;
 
 export const Login: FC<NavigationProps> = ({ navigation }) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState<string>('');
+  const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
   const [password, setPassword] = useState<string>('');
   const { loginMutate, data, isPending } = useLogin();
 
+  const validateEmail = (text: string): void => {
+    const emailExists = users.some((user) => user.email === text);
+    setIsValidEmail(emailExists);
+  };
+
+  const debouncedValidateEmail = useCallback(debounce(validateEmail, 500), []);
+
   const handleChangeEmail = (text: string): void => {
     setEmail(text);
+
+    debouncedValidateEmail(text);
   };
 
   const handleChangePassword = (text: string): void => {
@@ -49,14 +61,16 @@ export const Login: FC<NavigationProps> = ({ navigation }) => {
           value={email}
           textContentType='emailAddress'
         />
-        <Input
-          onChangeText={handleChangePassword}
-          placeholder='Password'
-          accessibilityLabel='Password'
-          value={password}
-          textContentType='password'
-          secureTextEntry
-        />
+        {isValidEmail && (
+          <Input
+            onChangeText={handleChangePassword}
+            placeholder='Password'
+            accessibilityLabel='Password'
+            value={password}
+            textContentType='password'
+            secureTextEntry
+          />
+        )}
         {data?.error && (
           <Text1
             text={data.error}

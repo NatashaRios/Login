@@ -1,5 +1,5 @@
 import { setToken } from '@/servicies/keychain/token';
-import { IAuth, IResponseLogin, login } from '@/servicies/login/login';
+import { IAuth, IResponseLogin, login } from '@/servicies/login';
 import { useMutation } from '@tanstack/react-query';
 
 interface ILoginResponse {
