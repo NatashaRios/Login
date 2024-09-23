@@ -15,10 +15,11 @@ for Android: npm run android
 ```bash
 - React Native with TypeScript: building mobile applications.
 - @react-navigation/native: navigation.
-- react-native-config: managing environment-specific configurations.
+- react-native-config: managing environment specific variables securely.
 - expo-secure-store: securely storing sensitive information like tokens.
-- react-redux: managing the application state with Redux in a React Native app.
+- react-redux: efficiently manage and centralize application state.
 - redux-persist: persisting the Redux state across sessions.
 - @tanstack/react-query: managing server state and asynchronous data fetching.
+- lodash: To simplify complex data manipulation and improve code readability.
 
 ```
